@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -15,6 +16,8 @@ use Laravel\Socialite\Facades\Socialite;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -42,3 +45,5 @@ Route::get('/auth/callback', function () {
         'token' => $user->createToken('spa')->plainTextToken,
     ];
 });
+
+Route::middleware('auth:sanctum')->post('/event', [\App\Http\Controllers\Controller::class, 'event']);

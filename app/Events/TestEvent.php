@@ -34,14 +34,12 @@ class TestEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('websockets-dashboard-statistics'),
             new PrivateChannel('App.Models.User.'.$this->userId)
         ];
     }
 
     public function broadCastWith()
     {
-        Log::info('Événement émis', ['event' => $this]);
         return [
             'user' => User::where('id', $this->userId)->first(),
         ];

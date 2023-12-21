@@ -19,4 +19,22 @@ class Controller extends BaseController
             'user_id' => auth()->id(),
         ], 200);
     }
+
+    public function photo(){
+        $this->validate(request(), [
+            'photo' => 'required|image|max:2048',
+        ]);
+        $user = auth()->user();
+
+        $user->update([
+            'photo' => request()->file('photo')->store('photos', 'public'),
+        ]);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Photo uploaded',
+            'user' => $user,
+        ], 200);
+    }
 }
+<

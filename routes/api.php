@@ -23,6 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:sanctum')->post('/photo', [\App\Http\Controllers\Controller::class, 'photo']);
+
 Route::get('/auth/callback', function () {
     $googleUser = Socialite::driver('google')->stateless()->user();
 
@@ -47,3 +49,4 @@ Route::get('/auth/callback', function () {
 });
 
 Route::middleware('auth:sanctum')->post('/event', [\App\Http\Controllers\Controller::class, 'event']);
+
